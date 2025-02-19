@@ -2,7 +2,7 @@
   "name": "calculator-with-apis",
   "version": "1.0.0",
   "description": "Exercise: reproduce a calculator just using APIs for sum, Subtraction, Multiplication and Division",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "jest"
   },
@@ -18,5 +18,9 @@
   "homepage": "https://github.com/irene-fabbri/calculator-with-apis#readme",
   "devDependencies": {
     "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
   }
 }
