@@ -1,0 +1,22 @@
+{
+  "name": "calculator-with-apis",
+  "version": "1.0.0",
+  "description": "Exercise: reproduce a calculator just using APIs for sum, Subtraction, Multiplication and Division",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/irene-fabbri/calculator-with-apis.git"
+  },
+  "author": "Irene Fabbri",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/irene-fabbri/calculator-with-apis/issues"
+  },
+  "homepage": "https://github.com/irene-fabbri/calculator-with-apis#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
