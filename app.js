@@ -6,7 +6,14 @@ app.use(express.json());
 app.use((req, res, next) => {
     res.setHeader("Content-Type": "application/vnd.api+json"); 
     if(! (req.get('Accept')==="application/vnd.api+json")){ 
-        return res.status(415).send("Unsupported media type");
+        return res.status(415).send({
+            "errors": [
+              {
+                "title": "Unsupported media type",
+                "detail": "The media type of the request is not supported."
+              }
+            ]
+          });
     };
     next();
 });
@@ -20,7 +27,14 @@ app.listen(PORT, () => {
 app.post('/sum', (req,res) => {
     // Check if body has a numbers section
     if(!req.body.num1 || !req.body.num2) {
-        return res.status(400).send('num1 and num2 required');
+        return res.status(400).send({
+            "errors": [
+              {
+                "title": "num1 and num2 required",
+                "detail": "The body needs to contain the paramenters num1 and num2"
+              }
+            ]
+          });
     };
     
     // Check if valid numbers
@@ -28,17 +42,26 @@ app.post('/sum', (req,res) => {
     let num2 = parseFloat(req.body.num2)
 
     if(isNaN(num1) || isNaN(num2)){
-        return res.status(400).send('Invalid number format');
+        return res.status(400).send({
+            "errors": [
+              {
+                "title": "Invalid number format",
+                "detail": "The numbers provided are not in a valid format."
+              }
+            ]
+          });
     }
     
     let sum = num1 + num2    
 
     res.status(200);
     return res.json({
-        "operation": "sum",
-        "num1": `${req.body.num1}`,
-        "num2": `${req.body.num2}`,
-        "result": `${sum}`
+        "data": {
+            "operation": "sum",
+            "num1": `${req.body.num1}`,
+            "num2": `${req.body.num2}`,
+            "result": `${sum}`
+      }    
     });
 
 });
