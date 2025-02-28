@@ -1,47 +1,52 @@
 const express = require(`express`);
 const cors = require(`cors`);
+const PORT = process.env.PORT || 5000
 
 const app = express ();
-app.use(express.json());
+app.use(cors());
 
-// Check that the Content-Type is correct for POST/PUT/PATCH requests
+// Allow for POST method and application/vnd.api+json Content-Type and Accept field
 app.use((req, res, next) => {
-    if (['POST', 'PUT', 'PATCH'].includes(req.method)) {
+    if (['POST'].includes(req.method)) {
+        // Check Content-Type
         if (req.get('Content-Type') !== 'application/vnd.api+json') {
             return res.status(415).send({
                 "errors": [
                     {
-                        "status": "400",
-                        "code": "unsupported-media-type",                  
+                        "status": "415",
+                        "code": "unsupported-media-type",     
                         "title": "Unsupported Media Type",
                         "detail": "Content-Type must be application/vnd.api+json"
                     }
                 ]
             });
         }
-    }
-    next();
-});
-
-app.use((req, res, next) => {
-    res.set('Content-Type', 'application/vnd.api+json');
-    if( req.get('Accept') !=="application/vnd.api+json"){ 
-        return res.status(415).send({
-            "errors": [
-              {
-                "title": "Unsupported media type",
-                "detail": "The media type of the request is not supported."
-              }
-            ]
+        // Check Accept
+        if (req.get('Accept') !== 'application/vnd.api+json') {
+          return res.status(406).send({
+              "errors": [
+                  {
+                      "status": "406",
+                      "code": "not-acceptable",     
+                      "title": "Not Acceptable",
+                      "detail": "Accept header must be application/vnd.api+json"
+                  }
+              ]
           });
-    };
+      }
+    } else {
+      return res.status(405).send({
+        "errors": [
+            {
+                "status": "405",
+                "code": "method-not-allowed",     
+                "title": "Method not allowed",
+                "detail": "Request metod MUST be POST"
+            }
+        ]
+    });
+  }
     next();
-});
-
-const PORT = process.env.PORT || 5000
-
-app.listen(PORT, () => {
-    console.log("Server Listening on PORT:", PORT);
 });
 
 app.post('/sum', (req,res) => {
@@ -93,3 +98,6 @@ app.post('/sum', (req,res) => {
 
 });
 
+app.listen(PORT, () => {
+  console.log("Server Listening on PORT:", PORT);
+});
