@@ -163,6 +163,26 @@ app.post('/div', inputValidation, (req,res) => {
 
 });
 
+// Centralized error handling middleware
+app.use((req, res, next) => {
+  const error = new Error('Not Found');
+  error.status = 404;
+  next(error);
+});
+
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.json({
+      "errors": [
+        {
+          "status": `${error.status}`,
+          "code": `${error.message}`,          
+          "title": `${error.message}`
+        }
+      ]
+  });
+});
+
 app.listen(PORT, () => {
   console.log("Server Listening on PORT:", PORT);
 });
