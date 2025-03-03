@@ -1,6 +1,7 @@
 const express = require(`express`);
 const cors = require(`cors`);
 const PORT = process.env.PORT || 5000
+const inputValidation = require('./input_validation')
 
 const app = express ();
 
@@ -52,38 +53,30 @@ app.use((req, res, next) => {
     next();
 });
 
-app.post('/sum', (req,res) => {
-    // Extract and process the 'data' from the body
-    const { data } = req.body;
+// Handle invalid JSON
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError) {
+    return res.status(400).send({
+      "errors": [
+        {
+          "status": "400",
+          "code": "invalid-JSON",          
+          "title": "invalid JSON",
+          "detail": "The paylod MUST be valid JSON"
+        }
+      ]
+    });
+  }
+  next(err); // Pass the error to the next middleware if it's not a syntax error
+});
 
-    if(!data || !data.attributes || !data.attributes.num1 || !data.attributes.num2) {
-        return res.status(400).send({
-            "errors": [
-              {
-                "status": "400",
-                "code": "invalid-parameters",          
-                "title": "num1 and num2 required",
-                "detail": "The body needs to contain the attributes num1 and num2"
-              }
-            ]
-          });
-    };
-    // Check if valid numbers
+
+app.post('/sum', inputValidation, (req,res) => {
+
+  const { data } = req.body;
+
     let num1 = parseFloat(data.attributes.num1)
     let num2 = parseFloat(data.attributes.num2)
-
-    if(isNaN(num1) || isNaN(num2)){
-        return res.status(400).send({
-            "errors": [
-              {
-                "status": "400",
-                "code": "invalid-number-format",          
-                "title": "Invalid number format",
-                "detail": "The numbers provided are not in a valid format."
-              }
-            ]
-          });
-    }
     
     let sum = num1 + num2    
 
@@ -101,39 +94,13 @@ app.post('/sum', (req,res) => {
 
 });
 
-app.post('/sub', (req,res) => {
+app.post('/sub', inputValidation, (req,res) => {
   // Extract and process the 'data' from the body
   const { data } = req.body;
 
-  if(!data || !data.attributes || !data.attributes.num1 || !data.attributes.num2) {
-      return res.status(400).send({
-          "errors": [
-            {
-              "status": "400",
-              "code": "invalid-parameters",          
-              "title": "num1 and num2 required",
-              "detail": "The body needs to contain the attributes num1 and num2"
-            }
-          ]
-        });
-  };
-  // Check if valid numbers
   let num1 = parseFloat(data.attributes.num1)
   let num2 = parseFloat(data.attributes.num2)
 
-  if(isNaN(num1) || isNaN(num2)){
-      return res.status(400).send({
-          "errors": [
-            {
-              "status": "400",
-              "code": "invalid-number-format",          
-              "title": "Invalid number format",
-              "detail": "The numbers provided are not in a valid format."
-            }
-          ]
-        });
-  }
-  
   let substraction = num1 - num2    
 
   res.status(200).json({
@@ -150,39 +117,13 @@ app.post('/sub', (req,res) => {
 
 });
 
-app.post('/mult', (req,res) => {
-  // Extract and process the 'data' from the body
+app.post('/mult', inputValidation, (req,res) => {
+
   const { data } = req.body;
 
-  if(!data || !data.attributes || !data.attributes.num1 || !data.attributes.num2) {
-      return res.status(400).send({
-          "errors": [
-            {
-              "status": "400",
-              "code": "invalid-parameters",          
-              "title": "num1 and num2 required",
-              "detail": "The body needs to contain the attributes num1 and num2"
-            }
-          ]
-        });
-  };
-  // Check if valid numbers
   let num1 = parseFloat(data.attributes.num1)
   let num2 = parseFloat(data.attributes.num2)
-
-  if(isNaN(num1) || isNaN(num2)){
-      return res.status(400).send({
-          "errors": [
-            {
-              "status": "400",
-              "code": "invalid-number-format",          
-              "title": "Invalid number format",
-              "detail": "The numbers provided are not in a valid format."
-            }
-          ]
-        });
-  }
-  
+ 
   let multiplication = num1 * num2    
 
   res.status(200).json({
@@ -199,39 +140,13 @@ app.post('/mult', (req,res) => {
 
 });
 
-app.post('/div', (req,res) => {
-  // Extract and process the 'data' from the body
+app.post('/div', inputValidation, (req,res) => {
+
   const { data } = req.body;
 
-  if(!data || !data.attributes || !data.attributes.num1 || !data.attributes.num2) {
-      return res.status(400).send({
-          "errors": [
-            {
-              "status": "400",
-              "code": "invalid-parameters",          
-              "title": "num1 and num2 required",
-              "detail": "The body needs to contain the attributes num1 and num2"
-            }
-          ]
-        });
-  };
-  // Check if valid numbers
   let num1 = parseFloat(data.attributes.num1)
   let num2 = parseFloat(data.attributes.num2)
 
-  if(isNaN(num1) || isNaN(num2)){
-      return res.status(400).send({
-          "errors": [
-            {
-              "status": "400",
-              "code": "invalid-number-format",          
-              "title": "Invalid number format",
-              "detail": "The numbers provided are not in a valid format."
-            }
-          ]
-        });
-  }
-  
   let division = num1 / num2    
 
   res.status(200).json({
