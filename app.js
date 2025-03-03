@@ -139,11 +139,60 @@ app.post('/sub', (req,res) => {
   res.status(200).json({
       "data": {
           "type": "operation", // Type of resource (can be anything, "operation" in this case)
-          "id": "subtraction-operation", // Optional: Unique ID for this operation, you can generate a unique one
+          "id": "substraction-operation", // Optional: Unique ID for this operation, you can generate a unique one
           "attributes": {
               "num1": `${num1}`,
               "num2": `${num2}`,
               "result": `${substraction}`
+          }
+      }
+  });
+
+});
+
+app.post('/mult', (req,res) => {
+  // Extract and process the 'data' from the body
+  const { data } = req.body;
+
+  if(!data || !data.attributes || !data.attributes.num1 || !data.attributes.num2) {
+      return res.status(400).send({
+          "errors": [
+            {
+              "status": "400",
+              "code": "invalid-parameters",          
+              "title": "num1 and num2 required",
+              "detail": "The body needs to contain the attributes num1 and num2"
+            }
+          ]
+        });
+  };
+  // Check if valid numbers
+  let num1 = parseFloat(data.attributes.num1)
+  let num2 = parseFloat(data.attributes.num2)
+
+  if(isNaN(num1) || isNaN(num2)){
+      return res.status(400).send({
+          "errors": [
+            {
+              "status": "400",
+              "code": "invalid-number-format",          
+              "title": "Invalid number format",
+              "detail": "The numbers provided are not in a valid format."
+            }
+          ]
+        });
+  }
+  
+  let multiplication = num1 * num2    
+
+  res.status(200).json({
+      "data": {
+          "type": "operation", // Type of resource (can be anything, "operation" in this case)
+          "id": "multiplication-operation", // Optional: Unique ID for this operation, you can generate a unique one
+          "attributes": {
+              "num1": `${num1}`,
+              "num2": `${num2}`,
+              "result": `${multiplication}`
           }
       }
   });
