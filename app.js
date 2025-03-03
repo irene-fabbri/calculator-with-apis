@@ -1,6 +1,5 @@
 const express = require(`express`);
 const cors = require(`cors`);
-const PORT = process.env.PORT || 5000
 const inputValidation = require('./input_validation')
 
 const app = express ();
@@ -188,10 +187,6 @@ app.use((error, req, res, next) => {
         }
       ]
   });
-});
-
-app.listen(PORT, () => {
-  console.log("Server Listening on PORT:", PORT);
 });
 
 // Export the app instance for testing

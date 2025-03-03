@@ -2,10 +2,10 @@
   "name": "calculator-with-apis",
   "version": "1.0.0",
   "description": "Exercise: reproduce a calculator just using APIs for sum, Subtraction, Multiplication and Division",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "jest --detectOpenHandles"
+    "start": "node server.js",
+    "test": "jest"
   },
   "jest": {
     "testEnvironment": "node",
