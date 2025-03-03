@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/irene-fabbri/calculator-with-apis#readme",
   "devDependencies": {
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
   },
   "dependencies": {
     "body-parser": "^1.20.3",
