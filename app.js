@@ -3,7 +3,10 @@ const cors = require(`cors`);
 const PORT = process.env.PORT || 5000
 
 const app = express ();
-app.use(cors());
+
+app.use(express.json({type: 'application/vnd.api+json'}));
+app.use(express.urlencoded({ extended: true })); 
+app.use(cors())
 
 // Allow for POST method and application/vnd.api+json Content-Type and Accept field
 app.use((req, res, next) => {
@@ -50,21 +53,21 @@ app.use((req, res, next) => {
 });
 
 app.post('/sum', (req,res) => {
-    // Check if body has a numbers section
-    console.log(req.body);
-    if(!req.body.data || !req.body.data.num1 || !req.body.data.num2) {
+    // Extract and process the 'data' from the body
+    const { data } = req.body;
+
+    if(!data || !data.attributes || !data.attributes.num1 || !data.attributes.num2) {
         return res.status(400).send({
             "errors": [
               {
                 "status": "400",
                 "code": "invalid-parameters",          
                 "title": "num1 and num2 required",
-                "detail": "The body needs to contain the paramenters num1 and num2"
+                "detail": "The body needs to contain the attributes num1 and num2"
               }
             ]
           });
     };
-    
     // Check if valid numbers
     let num1 = parseFloat(req.body.data.num1)
     let num2 = parseFloat(req.body.data.num2)
@@ -89,9 +92,9 @@ app.post('/sum', (req,res) => {
             "type": "operation", // Type of resource (can be anything, "operation" in this case)
             "id": "sum-operation", // Optional: Unique ID for this operation, you can generate a unique one
             "attributes": {
-                "num1": `${req.body.num1}`,
-                "num2": `${req.body.num2}`,
-                "result": `${sum}`
+                // "num1": `${req.body.num1}`,
+                // "num2": `${req.body.num2}`,
+                // "result": `${sum}`
             }
         }
     });
