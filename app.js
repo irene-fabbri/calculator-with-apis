@@ -53,6 +53,13 @@ app.use((req, res, next) => {
     next();
 });
 
+// set respons Content-Type to be 'application/vnd.api+json'
+app.use((req, res, next) => {
+  res.setHeader('Content-Type', 'application/vnd.api+json');
+  next();
+});
+
+
 // Handle invalid JSON
 app.use((err, req, res, next) => {
   if (err instanceof SyntaxError) {
