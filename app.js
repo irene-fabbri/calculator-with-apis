@@ -69,8 +69,8 @@ app.post('/sum', (req,res) => {
           });
     };
     // Check if valid numbers
-    let num1 = parseFloat(req.body.data.num1)
-    let num2 = parseFloat(req.body.data.num2)
+    let num1 = parseFloat(data.attributes.num1)
+    let num2 = parseFloat(data.attributes.num2)
 
     if(isNaN(num1) || isNaN(num2)){
         return res.status(400).send({
@@ -92,9 +92,9 @@ app.post('/sum', (req,res) => {
             "type": "operation", // Type of resource (can be anything, "operation" in this case)
             "id": "sum-operation", // Optional: Unique ID for this operation, you can generate a unique one
             "attributes": {
-                // "num1": `${req.body.num1}`,
-                // "num2": `${req.body.num2}`,
-                // "result": `${sum}`
+                "num1": `${num1}`,
+                "num2": `${num2}`,
+                "result": `${sum}`
             }
         }
     });
