@@ -88,8 +88,8 @@ app.post('/sum', inputValidation, (req,res) => {
 
     res.status(200).json({
         "data": {
-            "type": "operation", // Type of resource (can be anything, "operation" in this case)
-            "id": "sum-operation", // Optional: Unique ID for this operation, you can generate a unique one
+            "type": "operation",
+            "id": "sum-operation",
             "attributes": {
                 "num1": `${num1}`,
                 "num2": `${num2}`,
@@ -111,8 +111,8 @@ app.post('/sub', inputValidation, (req,res) => {
 
   res.status(200).json({
       "data": {
-          "type": "operation", // Type of resource (can be anything, "operation" in this case)
-          "id": "substraction-operation", // Optional: Unique ID for this operation, you can generate a unique one
+          "type": "operation",
+          "id": "substraction-operation",
           "attributes": {
               "num1": `${num1}`,
               "num2": `${num2}`,
@@ -134,8 +134,8 @@ app.post('/mult', inputValidation, (req,res) => {
 
   res.status(200).json({
       "data": {
-          "type": "operation", // Type of resource (can be anything, "operation" in this case)
-          "id": "multiplication-operation", // Optional: Unique ID for this operation, you can generate a unique one
+          "type": "operation",
+          "id": "multiplication-operation",
           "attributes": {
               "num1": `${num1}`,
               "num2": `${num2}`,
@@ -157,8 +157,8 @@ app.post('/div', inputValidation, (req,res) => {
 
   res.status(200).json({
       "data": {
-          "type": "operation", // Type of resource (can be anything, "operation" in this case)
-          "id": "division-operation", // Optional: Unique ID for this operation, you can generate a unique one
+          "type": "operation",
+          "id": "division-operation",
           "attributes": {
               "num1": `${num1}`,
               "num2": `${num2}`,
